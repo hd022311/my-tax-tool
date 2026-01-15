@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="zh-TW"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;遺產稅試算 - LINE 版&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://static.line-scdn.net/liff/edge/2/sdk.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: sans-serif; background-color: #f0f2f5; padding: 15px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>h2 { text-align: center; color: #00b900; } /* LINE 綠 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.input-group { margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label { display: block; font-size: 14px; font-weight: bold; margin-bottom: 5px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; text-align: right; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-calc { width: 100%; padding: 12px; background-color: #00b900; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.btn-send { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 10px; display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.result-box { margin-top: 20px; padding: 15px; background: #f9f9f9; border: 1px dashed #00b900; display: none; border-radius: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.tax-val { font-size: 24px; color: #d93025; font-weight: bold; text-align: center; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;遺產稅試算&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="input-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;遺產總額 (元)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="number" id="totalAssets" value="30000000"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="input-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;配偶扣除額 (預設有配偶 553萬)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="number" id="ded_spouse" value="5530000"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="input-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;子女/卑親屬人數 (每人56萬)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="number" id="cnt_child" value="2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="input-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;喪葬費扣除額 (標準137萬)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="number" id="ded_funeral" value="1370000"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-calc" onclick="calculate()"&gt;計算並生成結果&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="resultBox" class="result-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="text-align:center;"&gt;預估應納稅額&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tax-val" id="taxVal"&gt;$0&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p id="calcDetail" style="font-size:12px; color:#666;"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-send" id="sendBtn" onclick="sendToLine()"&gt;將此結果傳送給顧問&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 1. 初始化 LIFF</p>
+<p class="p1"><span class="Apple-converted-space">    </span>liff.init({ liffId: "你的LIFF_ID_填在這裡" }) // 請替換成你在後台申請的 LIFF ID</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.then(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.log("LIFF 啟動成功");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>})</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.catch((err) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.log("LIFF 啟動失敗", err);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function calculate() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const total = parseFloat(document.getElementById('totalAssets').value) || 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const exemption = 13330000;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const spouse = parseFloat(document.getElementById('ded_spouse').value) || 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const child = (parseFloat(document.getElementById('cnt_child').value) || 0) * 560000;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const funeral = parseFloat(document.getElementById('ded_funeral').value) || 0;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const net = Math.max(0, total - exemption - spouse - child - funeral);</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let tax = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (net &lt;= 50000000) tax = net * 0.1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if (net &lt;= 100000000) tax = net * 0.15 - 2500000;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else tax = net * 0.2 - 7500000;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('resultBox').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('sendBtn').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('taxVal').innerText = '$' + Math.round(tax).toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('calcDetail').innerText = `淨額：$${Math.round(net).toLocaleString()}`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 2. 傳送訊息功能</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function sendToLine() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const taxResult = document.getElementById('taxVal').innerText;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const assets = document.getElementById('totalAssets').value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!liff.isInClient()) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>alert("請在 LINE App 內使用此功能");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>liff.sendMessages([</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'text',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>text: `【遺產稅試算報告】\n資產總額：${Number(assets).toLocaleString()}元\n預估應納稅額：${taxResult}\n註：此為初步試算，僅供參考。`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>]).then(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>alert("結果已成功傳送至對話框！");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>liff.closeWindow(); // 傳送完畢自動關閉視窗</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}).catch((err) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.error("傳送失敗", err);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
