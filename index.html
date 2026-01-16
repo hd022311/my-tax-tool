@@ -22,12 +22,12 @@
 
     <div class="header-box">
         <h1 class="text-3xl font-black tracking-widest mb-1">富邦人壽 | 俊德</h1>
-        <p class="text-sm font-bold opacity-90">資產保全與特留分智慧分析系統</p>
+        <p class="text-sm font-bold opacity-90 tracking-widest">資產保全與特留分智慧試算</p>
     </div>
 
     <div class="main-container">
-        <div class="card mb-6 shadow-xl">
-            <h3 class="text-lg font-black text-[#004a99] mb-5 border-l-4 border-[#00a950] pl-3">💰 資產現況</h3>
+        <div class="card mb-6 shadow-xl border border-slate-100">
+            <h3 class="text-lg font-black text-[#004a99] mb-5 border-l-4 border-[#00a950] pl-3">💰 遺產資產概況</h3>
             <div class="space-y-4">
                 <div class="relative">
                     <label class="text-xs font-bold text-slate-400 absolute left-4 top-2 italic">房產市價</label>
@@ -52,40 +52,42 @@
             <div class="space-y-4">
                 <div class="flex items-center justify-between p-4 bg-blue-50 rounded-2xl border border-blue-100 font-bold text-lg">
                     <span class="text-blue-900 italic text-sm">配偶是否在世</span>
-                    <input type="checkbox" id="spouse" class="w-7 h-7 rounded-lg text-blue-600">
+                    <input type="checkbox" id="spouse" class="w-7 h-7 rounded-lg text-blue-600 shadow-sm">
                 </div>
                 <div class="space-y-3 px-1">
-                    <div class="flex items-center justify-between font-bold text-lg">
-                        <span class="text-slate-600">子女幾位？</span>
-                        <input type="number" id="child" value="0" class="w-16 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
+                    <div class="flex items-center justify-between font-bold text-lg text-slate-600">
+                        <span>子女人數</span>
+                        <div class="flex items-center gap-2"><input type="number" id="child" value="0" class="w-16 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl"> <span>人</span></div>
                     </div>
-                    <div class="flex items-center justify-between font-bold text-lg">
-                        <span class="text-slate-400">父母幾位？</span>
-                        <input type="number" id="parent" value="0" class="w-16 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
+                    <div class="flex items-center justify-between font-bold text-lg text-slate-400">
+                        <span>父母人數</span>
+                        <div class="flex items-center gap-2"><input type="number" id="parent" value="0" class="w-16 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl"> <span>人</span></div>
                     </div>
-                    <div class="flex items-center justify-between font-bold text-lg">
-                        <span class="text-slate-400">兄弟姊妹？</span>
-                        <input type="number" id="sibling" value="0" class="w-16 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
+                    <div class="flex items-center justify-between font-bold text-lg text-slate-400">
+                        <span>兄弟姊妹</span>
+                        <div class="flex items-center gap-2"><input type="number" id="sibling" value="0" class="w-16 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl"> <span>人</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <button onclick="calc()" class="w-full bg-slate-800 text-white py-5 rounded-[2rem] font-black shadow-2xl active:scale-95 transition-all text-2xl mb-12">
-            生成分析報告
+        <button onclick="calc()" class="w-full bg-[#004a99] text-white py-5 rounded-[2.5rem] font-black shadow-2xl active:scale-95 transition-all text-2xl mb-12 border-b-4 border-blue-900">
+            分析資產並計算報告
         </button>
 
-        <div id="result" class="hidden mb-20 px-1">
+        <div id="result" class="hidden mb-20">
             <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-200">
-                <div class="bg-[#004a99] p-6 text-center text-white">
-                    <p class="font-black text-xl tracking-widest">資產保全建議報告</p>
-                </div>
+                <div class="bg-slate-800 p-6 text-center text-white"><p class="font-black text-xl tracking-widest">資產保全分析報告</p></div>
+                
                 <div id="resultContent" class="p-8 space-y-10"></div>
+
                 <div class="p-8 pt-0 text-center">
-                    <p class="text-slate-500 font-bold mb-4">富邦俊德 | 您的專業傳承顧問</p>
-                    <a href="https://line.me/ti/p/你的ID" class="block w-full bg-[#00a950] text-white py-5 rounded-2xl font-black shadow-lg text-xl flex items-center justify-center gap-2">
-                        💬 預約 1 對 1 諮詢
-                    </a>
+                    <a href="https://line.me/ti/p/你的ID" class="block w-full bg-[#00a950] text-white py-5 rounded-2xl font-black shadow-lg text-xl mb-4">💬 預約俊德 1 對 1 諮詢</a>
+                    <div class="p-4 bg-slate-50 rounded-xl text-left border border-slate-100">
+                        <p class="text-[10px] text-slate-400 font-bold leading-relaxed">
+                            ⚠️ 免責聲明：本試算結果僅供參考，實際分配金額仍須依個案法律事實與國稅局核定為準。如有繼承爭議，建議諮詢專業律師或顧問俊德。
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -118,7 +120,7 @@
             const cash = parseFloat(document.getElementById('cash').value) || 0;
             const stock = parseFloat(document.getElementById('stock').value) || 0;
             const totalBefore = re + cash + stock;
-            if (totalBefore <= 0) return alert("請輸入金額");
+            if (totalBefore <= 0) return alert("請輸入資產金額");
 
             const hasSpouse = document.getElementById('spouse').checked;
             const nC = parseInt(document.getElementById('child').value) || 0;
@@ -129,11 +131,12 @@
             if (nC > 0) { rank = 1; count = nC; rankTitle = "子女"; }
             else if (nP > 0) { rank = 2; count = nP; rankTitle = "父母"; }
             else if (nS > 0) { rank = 3; count = nS; rankTitle = "兄弟姊妹"; }
-            else { return alert("請填寫繼承成員"); }
+            else { return alert("請填寫成員結構"); }
 
             const ratio = (re / totalBefore);
             let shift = (ratio > 0.7) ? (re * 0.3) : (cash + stock);
             const totalAfter = totalBefore - shift;
+            const discountPercent = Math.round((shift / totalBefore) * 100);
 
             sync({ total: totalBefore, struct: `配偶:${hasSpouse?'有':'無'},子:${nC},父:${nP},兄:${nS}`, plan: ratio > 0.7 ? '房產活化' : '傳承優化' });
 
@@ -144,49 +147,65 @@
             } else { hShare = 1/count; }
 
             document.getElementById('result').classList.remove('hidden');
+            
+            let siblingNotice = (rank === 3) ? `
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl mb-6">
+                    <p class="text-amber-800 font-black text-sm">💡 俊德專業提醒：</p>
+                    <p class="text-amber-700 font-bold text-xs leading-relaxed">
+                        113憲判字第3號指出兄弟姊妹特留分「不合理」。法律過渡期，建議透過保險指定受益人，可完全規避此項爭議。
+                    </p>
+                </div>
+            ` : "";
+
             document.getElementById('resultContent').innerHTML = `
-                <div class="space-y-4">
-                    <div class="flex justify-between items-end border-b-2 border-slate-100 pb-4">
-                        <p class="text-slate-400 font-bold text-sm">原始資產總額</p>
-                        <p class="text-3xl font-black text-slate-700">${Math.round(totalBefore).toLocaleString()} <span class="text-sm">萬</span></p>
-                    </div>
-                    <div class="flex justify-between items-end">
-                        <p class="text-blue-500 font-black text-sm">優化後計算基準</p>
-                        <p class="text-3xl font-black text-blue-600">${Math.round(totalAfter).toLocaleString()} <span class="text-sm text-blue-400">萬</span></p>
+                <div class="text-center space-y-2">
+                    <p class="text-slate-400 font-bold tracking-widest text-sm uppercase">原始資產估算</p>
+                    <p class="text-4xl font-black text-slate-800">${Math.round(totalBefore).toLocaleString()} <span class="text-lg font-bold">萬</span></p>
+                    <div class="inline-block bg-emerald-100 text-emerald-700 px-4 py-1 rounded-full text-sm font-black mt-2">
+                        規劃後預計負擔降低約 ${discountPercent}% 
                     </div>
                 </div>
 
-                <div class="p-6 bg-blue-50 rounded-3xl border-2 border-blue-100 shadow-inner">
+                <div class="p-6 bg-blue-50 rounded-3xl border-2 border-blue-100 shadow-sm">
                     <p class="font-black text-[#004a99] text-xl mb-3 italic">🎯 俊德專業規劃建議</p>
                     <p class="report-main-text">
-                        建議將 <span class="report-highlight">${Math.round(shift).toLocaleString()} 萬</span> 規劃為人壽保險。此舉能合法降低 <b>${rankTitle}</b> 未來可主張的特留分金額，解決現金不足問題。
+                        將 <span class="report-highlight">${Math.round(shift).toLocaleString()} 萬</span> 移轉至人壽保險金。規劃後計算特留分之基準資產縮減至 <span class="text-blue-700 font-black">${Math.round(totalAfter).toLocaleString()} 萬</span>。
                     </p>
                 </div>
 
-                <div class="risk-box shadow-sm">
+                ${siblingNotice}
+
+                <div class="risk-box">
                     <p class="text-red-700 font-black text-xl mb-2">⚠️ 核心資產風險警示</p>
                     <p class="text-red-600 font-bold text-lg leading-relaxed italic">
-                        目前繼承人包含 <b>${rankTitle}</b>。若現金儲備不足以支付其特留分，房產將面臨產權鎖死风险，家族無法自由處分！
+                        主要繼承人包含 <b>${rankTitle}</b>。若現金儲備不足以支應特留分，房產恐被迫進入「公同共有」，祖產將無法買賣處分！
                     </p>
                 </div>
 
-                <div class="space-y-4">
-                    <h4 class="text-xs font-black text-slate-400 tracking-widest uppercase ml-1">規劃後單人特留分估算</h4>
-                    ${hasSpouse ? renderRow("配偶", sShare, 0.5, totalAfter) : ''}
-                    ${renderRow(rankTitle, hShare, hRate, totalAfter)}
+                <div class="space-y-4 pt-4 border-t border-slate-100">
+                    <h4 class="text-xs font-black text-slate-400 tracking-widest uppercase ml-1">規劃前後對比 (單人估計)</h4>
+                    ${hasSpouse ? renderCompareRow("配偶", sShare, 0.5, totalBefore, totalAfter) : ''}
+                    ${renderCompareRow(rankTitle, hShare, hRate, totalBefore, totalAfter)}
                 </div>
             `;
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function renderRow(l, s, r, a) {
-            const val = a * s * r;
+        function renderCompareRow(l, s, r, before, after) {
+            const valBefore = Math.round(before * s * r);
+            const valAfter = Math.round(after * s * r);
             return `
-                <div class="flex justify-between items-center bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                    <span class="text-lg font-bold text-slate-600">${l}</span>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-[#004a99]">${val.toFixed(1)}萬</span>
-                        <span class="block text-[10px] font-black text-white bg-[#00a950] px-2 rounded-full mt-1">優化後金額</span>
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                    <p class="text-lg font-bold text-slate-600 mb-3">${l}</p>
+                    <div class="flex justify-between items-center">
+                        <div class="text-center px-4 border-r">
+                            <p class="text-[10px] text-slate-400 font-bold">優化前</p>
+                            <p class="text-lg font-black text-slate-400 line-through">${valBefore}萬</p>
+                        </div>
+                        <div class="text-center px-4">
+                            <p class="text-[10px] text-blue-500 font-bold">優化後</p>
+                            <p class="text-2xl font-black text-[#004a99]">${valAfter}萬</p>
+                        </div>
                     </div>
                 </div>
             `;
