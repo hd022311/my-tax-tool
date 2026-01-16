@@ -8,235 +8,168 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
-        .input-card { background: white; border-radius: 1.5rem; border: 1px solid #e2e8f0; padding: 1.25rem; margin-bottom: 1rem; }
-        .fubon-blue { color: #004a99; }
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; }
+        
+        /* 仿圖漸層標頭 */
+        .header-box {
+            background: linear-gradient(135deg, #004a99 0%, #00a950 100%);
+            padding: 3.5rem 1.5rem 4.5rem 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .main-container {
+            max-width: 450px;
+            margin: -2.5rem auto 2rem auto;
+            padding: 0 1.25rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        /* 放大報告字體 */
+        .report-title { font-size: 1.4rem; font-weight: 900; color: #1e293b; }
+        .report-content { font-size: 1.2rem; line-height: 1.8; color: #334155; font-weight: 500; }
+        .report-highlight { font-size: 1.6rem; font-weight: 900; color: #004a99; border-bottom: 3px solid #00a950; }
+        .risk-text { font-size: 1.2rem; font-weight: 800; color: #dc2626; line-height: 1.6; }
     </style>
 </head>
-<body class="pb-20">
-    <div class="max-w-md mx-auto p-4">
-        
-        <div class="flex items-center gap-4 bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 mb-6 mt-4">
-            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-100 shrink-0 bg-slate-50">
-                <img id="profilePic" src="https://drive.google.com/thumbnail?id=1DIjJdTt_HDEYrAJVj0yKzbO81pQG2Ndh&sz=w200" class="w-full h-full object-cover">
-            </div>
-            <div>
-                <h2 class="text-xs font-bold text-slate-400">您好 <span id="userName" class="text-blue-600 font-black">嘉賓</span>，我是</h2>
-                <h2 class="text-lg font-black fubon-blue leading-tight">富邦人壽 | 俊德</h2>
-            </div>
-        </div>
+<body>
 
-        <div class="text-center mb-6">
-            <h1 class="text-xl font-black text-slate-800 tracking-tight">資產保全與特留分試算</h1>
-            <p class="text-[10px] font-bold text-slate-400 mt-1 italic">💡 自動判定順位，分析祖產風險</p>
-        </div>
+    <div class="header-box">
+        <h1 class="text-3xl font-black tracking-widest mb-1">富邦人壽 | 俊德</h1>
+        <p class="text-sm font-bold opacity-80 italic">您的資產安全與家族傳承，由我為您守護</p>
+    </div>
 
-        <div class="input-card border-t-4 border-t-[#004a99] shadow-sm">
-            <h3 class="font-bold text-slate-700 mb-3 text-sm flex items-center gap-2">💰 資產現況 (萬元)</h3>
-            <div class="space-y-3">
+    <div class="main-container">
+        <div class="card mb-6">
+            <h3 class="text-lg font-black text-[#004a99] mb-4 border-l-4 border-[#00a950] pl-3">一、資產概況 (萬元)</h3>
+            <div class="space-y-5">
                 <div class="relative">
-                    <label class="text-[10px] font-bold text-blue-700 absolute left-3 top-1 italic">房產市價</label>
-                    <input type="number" id="realEstate" placeholder="請輸入金額" class="w-full pt-5 pb-2 px-3 bg-slate-50 rounded-xl border-0 text-right font-black text-lg focus:ring-2 focus:ring-blue-500">
+                    <label class="text-xs font-bold text-slate-400">房產市價</label>
+                    <input type="number" id="re" placeholder="請輸入金額" class="w-full p-4 bg-slate-50 rounded-2xl border-0 text-right font-black text-xl">
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="relative">
-                        <label class="text-[10px] font-bold text-slate-400 absolute left-3 top-1">存款現金</label>
-                        <input type="number" id="cash" placeholder="0" class="w-full pt-5 pb-2 px-3 bg-slate-50 rounded-xl border-0 text-right font-bold">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-slate-400">現金存款</label>
+                        <input type="number" id="cash" placeholder="0" class="w-full p-4 bg-slate-50 rounded-2xl border-0 text-right font-bold text-lg">
                     </div>
-                    <div class="relative">
-                        <label class="text-[10px] font-bold text-slate-400 absolute left-3 top-1">股票基金</label>
-                        <input type="number" id="stock" placeholder="0" class="w-full pt-5 pb-2 px-3 bg-slate-50 rounded-xl border-0 text-right font-bold">
+                    <div>
+                        <label class="text-xs font-bold text-slate-400">股票基金</label>
+                        <input type="number" id="stock" placeholder="0" class="w-full p-4 bg-slate-50 rounded-2xl border-0 text-right font-bold text-lg">
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="input-card shadow-sm">
-            <h3 class="font-bold text-slate-700 mb-3 text-sm">👨‍👩‍👧‍👦 家庭成員結構</h3>
+            <h3 class="text-lg font-black text-[#004a99] mt-8 mb-4 border-l-4 border-[#00a950] pl-3">二、繼承成員</h3>
             <div class="space-y-4">
-                <div class="flex items-center justify-between p-3 bg-blue-50 rounded-xl border border-blue-100">
-                    <span class="font-bold text-blue-800 text-sm">配偶是否在世</span>
-                    <input type="checkbox" id="hasSpouse" class="w-5 h-5 rounded text-blue-600">
+                <div class="flex items-center justify-between p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                    <span class="font-bold text-blue-900 text-lg">有配偶</span>
+                    <input type="checkbox" id="spouse" class="w-6 h-6 rounded text-blue-600">
                 </div>
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="font-bold text-slate-600">子女幾位？</span>
-                        <input type="number" id="numChildren" value="0" min="0" class="w-16 bg-slate-100 p-2 text-center rounded-lg border-0 font-black">
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="font-bold text-slate-400">父母幾位？</span>
-                        <input type="number" id="numParents" value="0" min="0" class="w-16 bg-slate-100 p-2 text-center rounded-lg border-0 font-black">
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="font-bold text-slate-400">兄弟姊妹？</span>
-                        <input type="number" id="numSiblings" value="0" min="0" class="w-16 bg-slate-100 p-2 text-center rounded-lg border-0 font-black">
-                    </div>
+                <div class="flex items-center justify-between px-2">
+                    <span class="font-bold text-slate-600 text-lg">子女幾位？</span>
+                    <input type="number" id="child" value="0" class="w-20 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
+                </div>
+                <div class="flex items-center justify-between px-2">
+                    <span class="font-bold text-slate-400 text-lg">父母幾位？</span>
+                    <input type="number" id="parent" value="0" class="w-20 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
                 </div>
             </div>
         </div>
 
-        <button onclick="calculate()" class="w-full bg-slate-800 text-white py-4 rounded-2xl font-black shadow-lg active:scale-95 transition-all text-lg mb-8">
-            生成專業傳承分析報告
+        <button onclick="calc()" class="w-full bg-[#004a99] text-white py-5 rounded-[2rem] font-black shadow-xl active:scale-95 transition-all text-xl mb-10">
+            開始分析並計算報告
         </button>
 
-        <div id="resultArea" class="hidden mb-12">
-            <div class="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-slate-200">
-                <div class="bg-[#004a99] p-5 text-center text-white">
-                    <h3 class="font-black text-lg">資產保全建議報告</h3>
+        <div id="result" class="hidden mb-20">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-100">
+                <div class="bg-slate-800 p-6 text-center text-white">
+                    <p class="font-black text-xl tracking-widest">專業傳承建議報告</p>
                 </div>
-                <div id="resultContent" class="p-6 space-y-5"></div>
-                <div class="p-6 pt-0">
-                    <a href="https://line.me/ti/p/你的ID" class="block w-full bg-green-500 text-white text-center py-4 rounded-xl font-black shadow-md flex items-center justify-center gap-2">
-                        💬 聯繫俊德預約 1 對 1 諮詢
+                <div id="resultContent" class="p-8 space-y-8">
+                    </div>
+                <div class="p-8 pt-0">
+                    <a href="https://line.me/ti/p/你的LINEID" class="block w-full bg-[#00a950] text-white text-center py-5 rounded-2xl font-black shadow-lg text-xl flex items-center justify-center gap-2">
+                        💬 立即與俊德預約諮詢
                     </a>
-                </div>
-                <div class="p-4 bg-slate-50 border-t text-[9px] text-slate-400 text-center leading-relaxed px-6">
-                    ⚠️ 註：本試算依民法與 113年憲判字第3號精神編製。實際分配請洽專業顧問俊德進行個案評估。
+                    <p class="text-center text-slate-400 text-[10px] mt-6 leading-relaxed">
+                        本試算依民法與最新憲法法庭判決精神編製。<br>數據同步記錄至俊德顧問系統，將由我為您守護。
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        let currentUserName = "匿名嘉賓";
+        let userName = "嘉賓";
 
-        // 1. 初始化 LIFF (核心修正：強制檢查登入狀態)
-        async function initLIFF() {
+        async function init() {
             try {
                 await liff.init({ liffId: "2008902145-dYIF2R2M" });
                 if (liff.isLoggedIn()) {
-                    const profile = await liff.getProfile();
-                    currentUserName = profile.displayName;
-                    document.getElementById('userName').innerText = currentUserName;
-                    if (profile.pictureUrl) {
-                        document.getElementById('profilePic').src = profile.pictureUrl;
-                    }
-                } else {
-                    // 關鍵：未登入時強制開啟登入視窗
-                    liff.login();
-                }
-            } catch (err) {
-                console.error("LIFF 初始化出錯", err);
-            }
+                    const p = await liff.getProfile();
+                    userName = p.displayName;
+                } else { liff.login(); }
+            } catch (e) { console.log(e); }
         }
-        initLIFF();
+        init();
 
-        // 2. 自動傳送數據到 Google 表單
-        function logToGoogleForm(data) {
-            const actualFormID = "1lpAzMM1FJQaC8Nqfj6776KQZ-cihe0qVsXo1m4U--XU";
-            const url = `https://docs.google.com/forms/d/e/${actualFormID}/formResponse?` +
-                        `entry.31174987=${encodeURIComponent(currentUserName)}&` +
-                        `entry.1130638521=${data.total}&` +
-                        `entry.650225126=${encodeURIComponent(data.ratio + '%')}&` +
-                        `entry.2001556012=${encodeURIComponent(data.structure)}&` +
-                        `entry.1017830689=${encodeURIComponent(data.plan)}&` +
-                        `submit=Submit`;
+        function sync(data) {
+            // 已對接您的表單 ID
+            const fid = "1lpAzMM1FJQaC8Nqfj6776KQZ-cihe0qVsXo1m4U--XU";
+            const url = `https://docs.google.com/forms/d/e/${fid}/formResponse?` +
+                `entry.31174987=${encodeURIComponent(userName)}&` +
+                `entry.1130638521=${data.total}&` +
+                `entry.2001556012=${encodeURIComponent(data.struct)}&` +
+                `entry.1017830689=${encodeURIComponent(data.plan)}&` +
+                `submit=Submit`;
             fetch(url, { mode: 'no-cors' });
         }
 
-        // 3. 計算邏輯
-        function calculate() {
-            const re = parseFloat(document.getElementById('realEstate').value) || 0;
+        function calc() {
+            const re = parseFloat(document.getElementById('re').value) || 0;
             const cash = parseFloat(document.getElementById('cash').value) || 0;
             const stock = parseFloat(document.getElementById('stock').value) || 0;
-            const totalBefore = re + cash + stock;
+            const total = re + cash + stock;
+            if (total <= 0) return alert("請輸入資產");
 
-            const hasSpouse = document.getElementById('hasSpouse').checked;
-            const nChild = parseInt(document.getElementById('numChildren').value) || 0;
-            const nParent = parseInt(document.getElementById('numParents').value) || 0;
-            const nSibling = parseInt(document.getElementById('numSiblings').value) || 0;
+            const hasSpouse = document.getElementById('spouse').checked;
+            const nC = parseInt(document.getElementById('child').value) || 0;
+            const nP = parseInt(document.getElementById('parent').value) || 0;
 
-            if (totalBefore <= 0) { alert('請輸入資產金額'); return; }
+            let target = (nC > 0) ? "子女" : (nP > 0 ? "父母" : "繼承人");
+            let ratio = (re / total);
+            let shift = (ratio > 0.7) ? (re * 0.3) : (cash + stock);
 
-            // 自動判定法律順位
-            let rank = 0; let count = 0; let rankTitle = "";
-            if (nChild > 0) { rank = 1; count = nChild; rankTitle = "第一順位(子女)"; }
-            else if (nParent > 0) { rank = 2; count = nParent; rankTitle = "第二順位(父母)"; }
-            else if (nSibling > 0) { rank = 3; count = nSibling; rankTitle = "第三順位(兄弟姊妹)"; }
-            else { alert('請填寫繼承成員結構'); return; }
+            sync({ total: total, struct: `配偶:${hasSpouse?'有':'無'},子:${nC},父:${nP}`, plan: ratio > 0.7 ? '房產活化' : '傳承優化' });
 
-            // 策略判定
-            const ratio = (re / totalBefore); 
-            const isREPlan = (ratio > 0.7); 
-            let insShift = isREPlan ? (re * 0.3) : (cash + stock);
-            const totalAfter = totalBefore - insShift;
-
-            // 同步數據
-            logToGoogleForm({
-                total: totalBefore,
-                ratio: Math.round(ratio * 100),
-                structure: `配偶:${hasSpouse?'有':'無'},子:${nChild},父:${nParent},兄:${nSibling}`,
-                plan: isREPlan ? '房產活化保全' : '金融傳承優化'
-            });
-
-            // 特留分率計算
-            let sShare = 0, hShare = 0, hRate = (rank <= 2) ? 0.5 : 0.3333;
-            if (hasSpouse) {
-                if (rank === 1) { sShare = 1/(count+1); hShare = 1/(count+1); }
-                else if (rank === 2 || rank === 3) { sShare = 0.5; hShare = 0.5/count; }
-            } else { hShare = 1/count; }
-
-            document.getElementById('resultArea').classList.remove('hidden');
-
-            // 修法警示區
-            let legalAlert = (rank === 3) ? `
-                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 mt-2 shadow-inner">
-                    <p class="text-amber-800 font-black text-[10px]">⚖️ 113憲判字第3號提醒</p>
-                    <p class="text-[9px] text-amber-700 leading-relaxed font-bold">
-                        目前兄弟姊妹特留分已被宣告違憲。在法律修訂過渡期，透過保險指定受益人是排除爭議最穩妥的手段。
-                    </p>
-                </div>
-            ` : "";
-
+            document.getElementById('result').classList.remove('hidden');
             document.getElementById('resultContent').innerHTML = `
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-3 rounded-xl text-center border">
-                        <p class="text-[9px] text-slate-400 font-black">原始遺產總額</p>
-                        <p class="text-lg font-black text-slate-700">${Math.round(totalBefore).toLocaleString()}萬</p>
-                    </div>
-                    <div class="bg-[#004a99] p-3 rounded-xl text-center shadow-lg">
-                        <p class="text-[9px] text-blue-200 font-black">優化後計算基準</p>
-                        <p class="text-lg font-black text-white">${Math.round(totalAfter).toLocaleString()}萬</p>
-                    </div>
+                <div class="text-center space-y-2">
+                    <p class="text-slate-400 font-bold tracking-widest text-sm uppercase">資產優化分析</p>
+                    <p class="text-4xl font-black text-slate-800">${Math.round(total).toLocaleString()}<span class="text-lg"> 萬</span></p>
                 </div>
 
-                <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
-                    <p class="text-xs font-black text-[#004a99] mb-1">🎯 俊德規劃：${isREPlan?'房產活化保全':'金融傳承優化'}</p>
-                    <p class="text-[10px] text-blue-700 font-bold leading-relaxed">
-                        建議將 <span class="text-[#004a99] underline">${Math.round(insShift).toLocaleString()} 萬</span> 規劃為人壽保險金。理賠金依法不計入遺產，可有效大幅縮減特留分負擔。
+                <div class="p-6 bg-blue-50 rounded-3xl border-2 border-blue-100">
+                    <p class="font-black text-[#004a99] text-xl mb-3">🎯 俊德專業規劃建議</p>
+                    <p class="report-content">
+                        建議將 <span class="report-highlight">${Math.round(shift).toLocaleString()} 萬</span> 移轉至保險預留金。此規劃可依法降低未來應支付之特留分，有效守護家族資產。
                     </p>
                 </div>
 
-                ${legalAlert}
-
-                <div class="p-4 bg-red-50 rounded-2xl border-l-4 border-red-500 shadow-sm">
-                    <h5 class="text-red-700 font-black text-[11px] mb-1 italic">⚠️ 核心危機：祖產鎖死風險</h5>
-                    <p class="text-[10px] text-red-600 font-bold leading-relaxed">
-                        您的主要繼承人為 <b>${rankTitle}</b>。若現金儲備不足以支應特留分，房產恐被強制轉為「公同共有」，導致產權糾紛無法處分。
+                <div class="p-6 bg-red-50 rounded-3xl border-l-8 border-red-500 shadow-sm">
+                    <p class="text-red-700 font-black text-xl mb-3">⚠️ 核心風險警示</p>
+                    <p class="risk-text">
+                        目前繼承人包含 <span class="underline">${target}</span>。若現金不足以支付特留分，房產恐面臨「公同共有」狀態，導致資產被鎖死、無法自由處分！
                     </p>
                 </div>
-
-                <div class="space-y-3">
-                    <h4 class="text-[9px] font-black text-slate-400 tracking-widest uppercase ml-1">規劃後單人特留分估算</h4>
-                    ${renderRow("配偶", sShare, 0.5, totalBefore, totalAfter, hasSpouse)}
-                    ${renderRow(rankTitle, hShare, hRate, totalBefore, totalAfter, true)}
-                </div>
             `;
-            document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function renderRow(label, share, rate, b, a, show) {
-            if (!show) return '';
-            const aV = a * share * rate;
-            return `
-                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <span class="text-[10px] font-bold text-slate-600">${label}</span>
-                    <div class="text-right">
-                        <span class="text-md font-black text-[#004a99]">${aV.toFixed(1)}萬</span>
-                        <span class="text-[9px] font-black text-white bg-emerald-500 px-2 rounded-full ml-1">規劃生效</span>
-                    </div>
-                </div>
-            `;
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
