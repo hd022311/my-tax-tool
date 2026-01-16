@@ -17,7 +17,7 @@
     <div class="max-w-md mx-auto p-4">
         
         <div class="flex items-center gap-4 bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 mb-6 mt-4">
-            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-100 shrink-0 bg-slate-100">
+            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-100 shrink-0 bg-slate-50">
                 <img id="profilePic" src="https://drive.google.com/thumbnail?id=1DIjJdTt_HDEYrAJVj0yKzbO81pQG2Ndh&sz=w200" class="w-full h-full object-cover">
             </div>
             <div>
@@ -28,7 +28,7 @@
 
         <div class="text-center mb-6">
             <h1 class="text-xl font-black text-slate-800 tracking-tight">資產保全與特留分試算</h1>
-            <p class="text-[10px] font-bold text-slate-400 mt-1 italic">💡 自動判定順位，精準分析祖產風險</p>
+            <p class="text-[10px] font-bold text-slate-400 mt-1 italic">💡 自動判定順位，分析祖產風險</p>
         </div>
 
         <div class="input-card border-t-4 border-t-[#004a99] shadow-sm">
@@ -36,7 +36,7 @@
             <div class="space-y-3">
                 <div class="relative">
                     <label class="text-[10px] font-bold text-blue-700 absolute left-3 top-1 italic">房產市價</label>
-                    <input type="number" id="realEstate" placeholder="0" class="w-full pt-5 pb-2 px-3 bg-slate-50 rounded-xl border-0 text-right font-black text-lg focus:ring-2 focus:ring-blue-500">
+                    <input type="number" id="realEstate" placeholder="請輸入金額" class="w-full pt-5 pb-2 px-3 bg-slate-50 rounded-xl border-0 text-right font-black text-lg focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div class="relative">
@@ -91,7 +91,7 @@
                     </a>
                 </div>
                 <div class="p-4 bg-slate-50 border-t text-[9px] text-slate-400 text-center leading-relaxed px-6">
-                    ⚠️ 重要聲明：本試算依民法與最新憲法法庭判決精神編製。實際分配受個案債務影響，請洽專業顧問俊德。
+                    ⚠️ 註：本試算依民法與 113年憲判字第3號精神編製。實際分配請洽專業顧問俊德進行個案評估。
                 </div>
             </div>
         </div>
@@ -100,26 +100,31 @@
     <script>
         let currentUserName = "匿名嘉賓";
 
-        // 1. 初始化 LINE LIFF
+        // 1. 初始化 LIFF (核心修正：強制檢查登入狀態)
         async function initLIFF() {
             try {
-                await liff.init({ liffId: "2008902145-EOR8LZNp" });
+                await liff.init({ liffId: "2008902145-dYIF2R2M" });
                 if (liff.isLoggedIn()) {
                     const profile = await liff.getProfile();
                     currentUserName = profile.displayName;
                     document.getElementById('userName').innerText = currentUserName;
-                    document.getElementById('profilePic').src = profile.pictureUrl;
+                    if (profile.pictureUrl) {
+                        document.getElementById('profilePic').src = profile.pictureUrl;
+                    }
                 } else {
+                    // 關鍵：未登入時強制開啟登入視窗
                     liff.login();
                 }
-            } catch (err) { console.log("LIFF Init Failed"); }
+            } catch (err) {
+                console.error("LIFF 初始化出錯", err);
+            }
         }
         initLIFF();
 
         // 2. 自動傳送數據到 Google 表單
         function logToGoogleForm(data) {
-            const formID = "1lpAzMM1FJQaC8Nqfj6776KQZ-cihe0qVsXo1m4U--XU";
-            const url = `https://docs.google.com/forms/d/e/${formID}/formResponse?` +
+            const actualFormID = "1lpAzMM1FJQaC8Nqfj6776KQZ-cihe0qVsXo1m4U--XU";
+            const url = `https://docs.google.com/forms/d/e/${actualFormID}/formResponse?` +
                         `entry.31174987=${encodeURIComponent(currentUserName)}&` +
                         `entry.1130638521=${data.total}&` +
                         `entry.650225126=${encodeURIComponent(data.ratio + '%')}&` +
@@ -164,7 +169,7 @@
                 plan: isREPlan ? '房產活化保全' : '金融傳承優化'
             });
 
-            // 特留分率
+            // 特留分率計算
             let sShare = 0, hShare = 0, hRate = (rank <= 2) ? 0.5 : 0.3333;
             if (hasSpouse) {
                 if (rank === 1) { sShare = 1/(count+1); hShare = 1/(count+1); }
@@ -172,6 +177,16 @@
             } else { hShare = 1/count; }
 
             document.getElementById('resultArea').classList.remove('hidden');
+
+            // 修法警示區
+            let legalAlert = (rank === 3) ? `
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 mt-2 shadow-inner">
+                    <p class="text-amber-800 font-black text-[10px]">⚖️ 113憲判字第3號提醒</p>
+                    <p class="text-[9px] text-amber-700 leading-relaxed font-bold">
+                        目前兄弟姊妹特留分已被宣告違憲。在法律修訂過渡期，透過保險指定受益人是排除爭議最穩妥的手段。
+                    </p>
+                </div>
+            ` : "";
 
             document.getElementById('resultContent').innerHTML = `
                 <div class="grid grid-cols-2 gap-4">
@@ -188,14 +203,16 @@
                 <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
                     <p class="text-xs font-black text-[#004a99] mb-1">🎯 俊德規劃：${isREPlan?'房產活化保全':'金融傳承優化'}</p>
                     <p class="text-[10px] text-blue-700 font-bold leading-relaxed">
-                        建議將 <span class="text-[#004a99] underline">${Math.round(insShift).toLocaleString()} 萬</span> 資產轉化為保險預留金，可節省特留分門檻並保全房產。
+                        建議將 <span class="text-[#004a99] underline">${Math.round(insShift).toLocaleString()} 萬</span> 規劃為人壽保險金。理賠金依法不計入遺產，可有效大幅縮減特留分負擔。
                     </p>
                 </div>
+
+                ${legalAlert}
 
                 <div class="p-4 bg-red-50 rounded-2xl border-l-4 border-red-500 shadow-sm">
                     <h5 class="text-red-700 font-black text-[11px] mb-1 italic">⚠️ 核心危機：祖產鎖死風險</h5>
                     <p class="text-[10px] text-red-600 font-bold leading-relaxed">
-                        您的繼承人包含 <b>${rankTitle}</b>。若現金不足支付其特留分，房產恐被依法鎖定為「公同共有」，導致無法買賣處分。
+                        您的主要繼承人為 <b>${rankTitle}</b>。若現金儲備不足以支應特留分，房產恐被強制轉為「公同共有」，導致產權糾紛無法處分。
                     </p>
                 </div>
 
@@ -216,7 +233,7 @@
                     <span class="text-[10px] font-bold text-slate-600">${label}</span>
                     <div class="text-right">
                         <span class="text-md font-black text-[#004a99]">${aV.toFixed(1)}萬</span>
-                        <span class="text-[9px] font-black text-white bg-emerald-500 px-2 rounded-full ml-1">優化生效</span>
+                        <span class="text-[9px] font-black text-white bg-emerald-500 px-2 rounded-full ml-1">規劃生效</span>
                     </div>
                 </div>
             `;
