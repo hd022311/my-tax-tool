@@ -2,91 +2,209 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>遺產稅試算 - 富邦俊德製作</title>
-    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>富邦俊德 | 傳承保全智慧試算</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --fubon-green: #00b900; --fubon-blue: #004a99; --gold: #b8860b; }
-        body { font-family: -apple-system, "微軟正黑體", sans-serif; background-color: #f0f2f5; padding: 15px; }
-        .container { max-width: 480px; margin: auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .brand-header { background: linear-gradient(135deg, #0056b3, #00b900); color: white; padding: 25px 15px; text-align: center; }
-        .brand-header h1 { margin: 0; font-size: 26px; letter-spacing: 2px; }
-        .content { padding: 20px; }
-        .unit-hint { font-size: 12px; color: #d93025; font-weight: bold; margin-bottom: 15px; text-align: right; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #333; }
-        .input-wrapper { position: relative; display: flex; align-items: center; }
-        input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; text-align: right; padding-right: 50px; }
-        .unit-tag { position: absolute; right: 15px; color: #777; font-size: 14px; }
-        .checkbox-group { display: flex; align-items: center; background: #f8f9fa; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #eee; }
-        .checkbox-group input { width: 20px; height: 20px; margin-right: 12px; }
-        .btn-calc { width: 100%; padding: 16px; background-color: #004a99; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .result-box { margin-top: 25px; padding: 20px; background: #fff; border: 2px solid var(--fubon-green); border-radius: 15px; display: none; }
-        .tax-val { font-size: 30px; color: #d93025; font-weight: bold; text-align: center; margin: 10px 0; }
-        .info-section { font-size: 13px; color: #555; background: #fdfaf0; padding: 15px; border-radius: 10px; margin-top: 15px; border-left: 5px solid var(--gold); }
-        .footer { text-align: center; padding: 20px; font-size: 14px; color: #888; background: #f8f9fa; }
-        .btn-send { width: 100%; padding: 12px; background-color: var(--fubon-green); color: white; border: none; border-radius: 10px; font-size: 16px; margin-top: 15px; cursor: pointer; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
+        .card { background: white; border-radius: 1.5rem; border: 1px solid #e2e8f0; padding: 1.5rem; margin-bottom: 1.25rem; }
+        .fubon-blue { color: #004a99; }
+        .bg-fubon-blue { background-color: #004a99; }
     </style>
 </head>
-<body>
-<div class="container">
-    <div class="brand-header">
-        <h1>富邦俊德製作</h1>
-        <p>專業遺產稅自動試算系統</p>
-    </div>
-    <div class="content">
-        <div class="unit-hint">※ 本系統單位均為「萬元」</div>
-        <div class="input-group"><label>土地 (公告現值總額)</label><div class="input-wrapper"><input type="number" id="assets_land" placeholder="0"><span class="unit-tag">萬元</span></div></div>
-        <div class="input-group"><label>房屋 (評定現值總額)</label><div class="input-wrapper"><input type="number" id="assets_house" placeholder="0"><span class="unit-tag">萬元</span></div></div>
-        <div class="input-group"><label>股票 / 基金 (市價)</label><div class="input-wrapper"><input type="number" id="assets_stocks" placeholder="0"><span class="unit-tag">萬元</span></div></div>
-        <div class="input-group"><label>現金 / 存款</label><div class="input-wrapper"><input type="number" id="assets_cash" placeholder="0"><span class="unit-tag">萬元</span></div></div>
-        <div class="input-group"><label>其他財產</label><div class="input-wrapper"><input type="number" id="assets_others" placeholder="0"><span class="unit-tag">萬元</span></div></div>
-        <div class="checkbox-group">
-            <input type="checkbox" id="has_spouse" checked>
-            <label for="has_spouse" style="margin-bottom:0;">有配偶 (扣除額 553萬)</label>
-        </div>
-        <div class="input-group">
-            <label>子女/直系卑親屬人數 (每人56萬)</label>
-            <div class="input-wrapper"><input type="number" id="cnt_child" value="0"><span class="unit-tag">人</span></div>
-        </div>
-        <button class="btn-calc" onclick="calculate()">立即計算並生成詳報</button>
-        <div id="resultBox" class="result-box">
-            <div style="text-align:center; font-weight:bold; color:#555;">預估應納稅額</div>
-            <div class="tax-val" id="taxVal">$0 元</div>
-            <div id="calcDetail" style="font-size:14px; border-top:1px solid #eee; padding-top:10px; color: #333;"></div>
-            <div class="info-section">
-                <strong>【理財貼心提醒】</strong><br>
-                • 免稅額：1,333 萬元。<br>
-                • 喪葬費扣除額：138 萬元。<br>
-                • 指定受益人壽險保險金 3,747 萬內免稅。<br>
-                • 稅率：5千萬內 10% / 1億內 15% / 超過 20%。
+<body class="pb-12">
+    <div class="max-w-md mx-auto p-4">
+        
+        <div class="flex items-center gap-4 bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 mb-6 mt-4">
+            <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-blue-100 shadow-sm shrink-0">
+                <img src="https://drive.google.com/thumbnail?id=1DIjJdTt_HDEYrAJVj0yKzbO81pQG2Ndh&sz=w200" alt="俊德照片" class="w-full h-full object-cover">
             </div>
-            <button class="btn-send" onclick="sendToLine()">傳送試算報告給俊德</button>
+            <div>
+                <h2 class="text-xl font-black fubon-blue">富邦人壽 | 俊德</h2>
+                <p class="text-[10px] font-bold text-slate-400 tracking-widest mt-0.5">專業遺產規劃與資產保全</p>
+                <div class="mt-2 inline-block bg-blue-50 text-blue-600 text-[10px] px-2 py-1 rounded-md font-bold">
+                    🛡️ 您的家族資產守護者
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mb-6 px-4">
+            <h1 class="text-2xl font-black text-slate-800 leading-tight">遺產特留分智慧分析</h1>
+            <p class="text-slate-400 text-xs mt-1 font-bold italic underline decoration-blue-200">即時同步憲法法庭最新判決趨勢</p>
+        </div>
+
+        <div class="card border-t-4 border-t-[#004a99]">
+            <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2">資產概況</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-blue-700 font-black mb-1 italic">房地產 / 土地 (按市價計)</label>
+                    <input type="number" id="realEstate" placeholder="請輸入金額" class="w-full p-4 bg-slate-50 rounded-2xl border-0 text-right font-bold text-lg">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-bold">存款 / 現金</label>
+                        <input type="number" id="cash" placeholder="0" class="w-full p-4 bg-slate-50 rounded-2xl border-0 text-right font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-bold">股票 / 基金</label>
+                        <input type="number" id="stock" placeholder="0" class="w-full p-4 bg-slate-50 rounded-2xl border-0 text-right font-bold">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2 border-l-4 border-blue-600 pl-3">繼承對象</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                    <span class="font-bold text-blue-800 text-sm">配偶是否在世</span>
+                    <input type="checkbox" id="hasSpouse" class="w-6 h-6 rounded text-blue-600 focus:ring-blue-500">
+                </div>
+                <select id="rank" class="w-full p-4 bg-slate-50 border-0 rounded-2xl font-bold text-slate-700 text-sm" onchange="toggleLabel()">
+                    <option value="1">第一順位：直系卑親屬 (子女)</option>
+                    <option value="2">第二順位：父母</option>
+                    <option value="3">第三順位：兄弟姊妹</option>
+                    <option value="4">第四順位：祖父母</option>
+                </select>
+                <div class="flex items-center justify-between px-2">
+                    <span id="heirLabel" class="text-slate-600 font-bold text-sm">子女總人數：</span>
+                    <input type="number" id="heirCount" value="1" min="1" class="w-16 bg-slate-100 p-2 text-center rounded-lg border-0 font-black">
+                </div>
+            </div>
+        </div>
+
+        <button onclick="calculate()" class="w-full bg-slate-800 text-white py-5 rounded-3xl font-black shadow-xl active:scale-95 transition-all text-lg mb-8">📊 產出智慧分析報告</button>
+
+        <div id="resultArea" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-200">
+                <div class="bg-[#004a99] p-6 text-center text-white">
+                    <p class="text-[10px] font-bold tracking-widest opacity-80 mb-1 tracking-tighter uppercase font-mono">Asset Equalization Report</p>
+                    <h3 class="font-black text-xl">資產保全與優化建議</h3>
+                </div>
+                
+                <div id="resultContent" class="p-6 space-y-6"></div>
+
+                <div class="p-6 pt-0">
+                    <a href="https://line.me/ti/p/你的ID" class="block w-full bg-green-500 text-white text-center py-4 rounded-2xl font-black shadow-lg shadow-green-100">💬 聯繫俊德進行 1 對 1 諮詢</a>
+                </div>
+
+                <div class="p-6 bg-slate-50 border-t border-slate-100 text-[10px] text-slate-400 leading-relaxed">
+                    <p class="font-bold mb-1 text-slate-500 underline">⚠️ 重要法律聲明與警語：</p>
+                    <ul class="list-disc pl-4 space-y-1">
+                        <li>本試算係依民法繼承編與保險法第112條進行。</li>
+                        <li><b>法律動態：</b> 針對兄弟姊妹特留分，應參考 113 年憲判字第 3 號判決精神。</li>
+                        <li><b>公同共有風險：</b> 現金不足支付特留分時，房產產權恐遭鎖死。</li>
+                        <li>實際方案請務必諮詢壽險顧問<b>俊德</b>進行個案評估。</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="footer">© 2026 <strong>富邦俊德</strong> 專業諮詢服務</div>
-</div>
-<script>
-    liff.init({ liffId: "你的LIFF_ID" }); // 記得換成 LINE 後台的 ID
-    function calculate() {
-        const toWan = 10000;
-        const totalAssets = ( (parseFloat(document.getElementById('assets_land').value) || 0) + (parseFloat(document.getElementById('assets_house').value) || 0) + (parseFloat(document.getElementById('assets_stocks').value) || 0) + (parseFloat(document.getElementById('assets_cash').value) || 0) + (parseFloat(document.getElementById('assets_others').value) || 0) ) * toWan;
-        const exemption = 13330000, spouseDed = document.getElementById('has_spouse').checked ? 5530000 : 0, childDed = (parseFloat(document.getElementById('cnt_child').value) || 0) * 560000, funeralDed = 1380000;
-        const totalDeductions = exemption + spouseDed + childDed + funeralDed;
-        const netEstate = Math.max(0, totalAssets - totalDeductions);
-        let tax = 0, rateStr = "";
-        if (netEstate <= 50000000) { tax = netEstate * 0.1; rateStr = "10%"; }
-        else if (netEstate <= 100000000) { tax = netEstate * 0.15 - 2500000; rateStr = "15%"; }
-        else { tax = netEstate * 0.2 - 7500000; rateStr = "20%"; }
-        document.getElementById('resultBox').style.display = 'block';
-        document.getElementById('taxVal').innerText = '$' + Math.round(tax).toLocaleString() + ' 元';
-        document.getElementById('calcDetail').innerHTML = `總資產：$${(totalAssets/toWan).toLocaleString()} 萬<br>總扣除額：$${(totalDeductions/toWan).toLocaleString()} 萬<br>遺產淨額：$${(netEstate/toWan).toLocaleString()} 萬<br>適用稅率：${rateStr}`;
-    }
-    function sendToLine() {
-        if (liff.isInClient()) {
-            liff.sendMessages([{ type: 'text', text: `【富邦俊德 - 遺產稅試算報告】\n預估納稅金額：${document.getElementById('taxVal').innerText}\n(包含喪葬費138萬扣除額)` }]).then(() => liff.closeWindow());
+
+    <script>
+        function toggleLabel(){ 
+            const labels = ["子女總人數", "父母人數", "兄弟姊妹人數", "祖父母人數"];
+            document.getElementById('heirLabel').innerText = labels[document.getElementById('rank').value-1] + "：";
         }
-    }
-</script>
+
+        function calculate() {
+            const re = parseFloat(document.getElementById('realEstate').value) || 0;
+            const cash = parseFloat(document.getElementById('cash').value) || 0;
+            const stock = parseFloat(document.getElementById('stock').value) || 0;
+            const hasSpouse = document.getElementById('hasSpouse').checked;
+            const rank = parseInt(document.getElementById('rank').value);
+            const count = parseInt(document.getElementById('heirCount').value) || 1;
+
+            const totalBefore = re + cash + stock;
+            if (totalBefore <= 0) { alert('請輸入金額'); return; }
+
+            let insShift = cash + stock;
+            let ratio = (insShift / totalBefore);
+            let planName = "金融資產優化方案";
+            let isRealEstatePlan = false;
+
+            if (ratio < 0.2) {
+                insShift = re * 0.3;
+                planName = "房地產活化保全方案";
+                isRealEstatePlan = true;
+            }
+
+            const totalAfter = totalBefore - insShift;
+
+            let sShare = 0, hShare = 0, hRate = (rank <= 2) ? 0.5 : 0.3333;
+            if (hasSpouse) {
+                if (rank === 1) { sShare = 1/(count+1); hShare = 1/(count+1); }
+                else if (rank === 2 || rank === 3) { sShare = 0.5; hShare = 0.5/count; }
+                else { sShare = 2/3; hShare = (1/3)/count; }
+            } else { hShare = 1/count; }
+
+            const resultArea = document.getElementById('resultArea');
+            resultArea.classList.remove('hidden');
+
+            let specialAlert = "";
+            if (rank === 3) {
+                specialAlert = `
+                    <div class="p-4 bg-amber-50 rounded-2xl border-l-4 border-amber-400">
+                        <h5 class="text-amber-800 font-black text-xs mb-1">⚖️ 憲法法庭修法提醒</h5>
+                        <p class="text-[10px] text-amber-700 font-medium leading-relaxed">
+                            依據 113 年憲判字第 3 號，兄弟姊妹特留分制度部分違憲。雖然目前法律尚未完成修正，但透過保險「指定受益人」能更有效預防修法過渡期的分配爭議。
+                        </p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('resultContent').innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-slate-50 rounded-2xl text-center border border-slate-100">
+                        <p class="text-[10px] text-slate-400 font-black uppercase tracking-wider">原始資產淨額</p>
+                        <p class="text-xl font-black text-slate-700">${Math.round(totalBefore).toLocaleString()}萬</p>
+                    </div>
+                    <div class="p-4 bg-[#004a99] rounded-2xl text-center shadow-lg">
+                        <p class="text-[10px] text-blue-200 font-black uppercase tracking-wider">優化後遺產</p>
+                        <p class="text-xl font-black text-white">${Math.round(totalAfter).toLocaleString()}萬</p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 p-5 rounded-3xl border border-blue-100">
+                    <p class="font-black text-sm text-[#004a99] mb-1">🎯 俊德規劃建議：${planName}</p>
+                    <p class="text-xs text-blue-700 leading-relaxed font-bold">
+                        建議規劃 <span class="bg-blue-600 text-white px-2 rounded-lg">${Math.round(insShift).toLocaleString()} 萬</span> 於保險預留金，除了節省特留分門檻，更可作為「補償金」確保產權。
+                    </p>
+                </div>
+
+                ${specialAlert}
+
+                <div class="p-5 bg-red-50 rounded-3xl border border-red-200 border-l-8 border-l-red-500">
+                    <h5 class="text-red-700 font-black text-xs mb-1 italic">⚠️ 核心危機：避免祖產鎖死</h5>
+                    <p class="text-[11px] text-red-600 leading-relaxed font-bold">
+                        若無足夠現金彌補其他繼承人之特留分，房產恐被打回「公同共有」，屆時任何買賣、抵押皆需全員同意，導致祖產因一人反對而陷入無限期鎖死。
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-[10px] font-black text-slate-400 tracking-widest uppercase ml-1">規劃後特留分差異</h4>
+                    ${renderRow("配偶", sShare, 0.5, totalBefore, totalAfter, hasSpouse)}
+                    ${renderRow(`第 ${rank} 順位繼承人`, hShare, hRate, totalBefore, totalAfter, true)}
+                </div>
+            `;
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderRow(label, share, rate, b, a, show) {
+            if (!show) return '';
+            const bV = b * share * rate, aV = a * share * rate;
+            return `
+                <div class="flex justify-between items-center bg-slate-50 p-4 rounded-2xl border border-slate-100 shadow-sm">
+                    <span class="text-[11px] font-black text-slate-600">${label}</span>
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-300 line-through mr-1 font-bold">${bV.toFixed(1)}萬</span>
+                        <span class="text-md font-black text-[#004a99]">${aV.toFixed(1)}萬</span>
+                        <span class="text-[9px] font-bold text-white bg-emerald-500 px-2 rounded-full ml-1">降 ${Math.round(((bV-aV)/bV)*100)}%</span>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>
