@@ -9,62 +9,43 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
-        
-        .header-box {
-            background: linear-gradient(135deg, #004a99 0%, #00a950 100%);
-            padding: 4rem 1.5rem 5rem 1.5rem;
-            color: white;
-            text-align: center;
-        }
-
-        .main-container {
-            max-width: 480px;
-            margin: -3rem auto 3rem auto;
-            padding: 0 1rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 2.5rem;
-            padding: 1.75rem;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        /* 報告文字特大化設定 */
-        .report-title { font-size: 1.5rem; font-weight: 900; color: #1e293b; }
+        .header-box { background: linear-gradient(135deg, #004a99 0%, #00a950 100%); padding: 4rem 1.5rem 5rem; color: white; text-align: center; }
+        .main-container { max-width: 480px; margin: -3rem auto 3rem; padding: 0 1rem; }
+        .card { background: white; border-radius: 2.5rem; padding: 1.75rem; box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .unit-label { position: absolute; right: 1rem; bottom: 0.75rem; font-weight: 900; color: #64748b; font-size: 1.1rem; }
+        /* 報告文字特大化 */
         .report-main-text { font-size: 1.25rem; line-height: 1.8; color: #334155; font-weight: 600; }
-        .report-highlight { font-size: 1.6rem; font-weight: 900; color: #004a99; border-bottom: 4px solid #00a950; padding: 0 2px; }
-        .risk-box { background-color: #fef2f2; border-left: 8px solid #ef4444; padding: 1.5rem; border-radius: 1.5rem; }
-        .risk-title { font-size: 1.3rem; font-weight: 900; color: #b91c1c; margin-bottom: 0.5rem; }
-        .risk-desc { font-size: 1.15rem; font-weight: 700; color: #dc2626; line-height: 1.6; }
+        .report-highlight { font-size: 1.6rem; font-weight: 900; color: #004a99; border-bottom: 4px solid #00a950; }
     </style>
 </head>
 <body>
 
     <div class="header-box">
         <h1 class="text-3xl font-black tracking-widest mb-1">富邦人壽 | 俊德</h1>
-        <p class="text-sm font-bold opacity-90 tracking-tighter">資產保全與特留分智慧分析系統</p>
+        <p class="text-sm font-bold opacity-90">資產保全與特留分智慧分析系統</p>
     </div>
 
     <div class="main-container">
         <div class="card mb-6">
             <h3 class="text-lg font-black text-[#004a99] mb-5 flex items-center gap-2">
-                <span class="w-2 h-6 bg-[#00a950] rounded-full"></span> 💰 資產現況 (萬元)
+                <span class="w-2 h-6 bg-[#00a950] rounded-full"></span> 💰 資產現況
             </h3>
             <div class="space-y-4">
                 <div class="relative">
                     <label class="text-xs font-bold text-slate-400 absolute left-4 top-2 italic">房產市價</label>
-                    <input type="number" id="re" placeholder="0" class="w-full pt-7 pb-3 px-4 bg-slate-50 rounded-2xl border-0 text-right font-black text-2xl focus:ring-2 focus:ring-blue-500">
+                    <input type="number" id="re" placeholder="0" class="w-full pt-7 pb-3 pl-4 pr-12 bg-slate-50 rounded-2xl border-0 text-right font-black text-2xl focus:ring-2 focus:ring-blue-500">
+                    <span class="unit-label">萬</span>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="relative">
                         <label class="text-xs font-bold text-slate-400 absolute left-4 top-2 italic">存款現金</label>
-                        <input type="number" id="cash" placeholder="0" class="w-full pt-7 pb-3 px-4 bg-slate-50 rounded-2xl border-0 text-right font-black text-xl">
+                        <input type="number" id="cash" placeholder="0" class="w-full pt-7 pb-3 pl-4 pr-10 bg-slate-50 rounded-2xl border-0 text-right font-black text-xl">
+                        <span class="unit-label text-sm">萬</span>
                     </div>
                     <div class="relative">
                         <label class="text-xs font-bold text-slate-400 absolute left-4 top-2 italic">股票基金</label>
-                        <input type="number" id="stock" placeholder="0" class="w-full pt-7 pb-3 px-4 bg-slate-50 rounded-2xl border-0 text-right font-black text-xl">
+                        <input type="number" id="stock" placeholder="0" class="w-full pt-7 pb-3 pl-4 pr-10 bg-slate-50 rounded-2xl border-0 text-right font-black text-xl">
+                        <span class="unit-label text-sm">萬</span>
                     </div>
                 </div>
             </div>
@@ -72,24 +53,22 @@
             <h3 class="text-lg font-black text-[#004a99] mt-8 mb-5 flex items-center gap-2">
                 <span class="w-2 h-6 bg-[#00a950] rounded-full"></span> 👨‍👩‍👧‍👦 繼承成員結構
             </h3>
-            <div class="space-y-4">
+            <div class="space-y-4 text-lg">
                 <div class="flex items-center justify-between p-4 bg-blue-50 rounded-2xl border border-blue-100">
-                    <span class="font-bold text-blue-900 text-lg italic">配偶是否在世</span>
+                    <span class="font-bold text-blue-900 italic">配偶是否在世</span>
                     <input type="checkbox" id="spouse" class="w-7 h-7 rounded-lg text-blue-600">
                 </div>
-                <div class="space-y-3 px-2">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-slate-600 text-lg">子女幾位？</span>
-                        <input type="number" id="child" value="0" min="0" class="w-20 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-slate-400 text-lg">父母幾位？</span>
-                        <input type="number" id="parent" value="0" min="0" class="w-20 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-slate-400 text-lg">兄弟姊妹？</span>
-                        <input type="number" id="sibling" value="0" min="0" class="w-20 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
-                    </div>
+                <div class="flex items-center justify-between px-2 font-bold text-slate-600">
+                    <span>子女幾位？</span>
+                    <input type="number" id="child" value="0" class="w-20 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
+                </div>
+                <div class="flex items-center justify-between px-2 font-bold text-slate-400">
+                    <span>父母幾位？</span>
+                    <input type="number" id="parent" value="0" class="w-20 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
+                </div>
+                <div class="flex items-center justify-between px-2 font-bold text-slate-400">
+                    <span>兄弟姊妹？</span>
+                    <input type="number" id="sibling" value="0" class="w-20 bg-slate-100 p-2 text-center rounded-xl border-0 font-black text-xl">
                 </div>
             </div>
         </div>
@@ -98,24 +77,12 @@
             生成分析報告
         </button>
 
-        <div id="result" class="hidden mb-20 px-1">
+        <div id="result" class="hidden mb-20">
             <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-200">
-                <div class="bg-[#004a99] p-6 text-center text-white">
-                    <p class="font-black text-xl tracking-widest uppercase">資產保全建議報告</p>
-                </div>
-                
-                <div id="resultContent" class="p-8 space-y-10">
-                    </div>
-
+                <div class="bg-[#004a99] p-6 text-center text-white"><p class="font-black text-xl tracking-widest">資產保全建議報告</p></div>
+                <div id="resultContent" class="p-8 space-y-10"></div>
                 <div class="p-8 pt-0 text-center">
-                    <div class="h-px bg-slate-100 mb-8"></div>
-                    <p class="text-slate-500 font-bold mb-4">富邦俊德 | 您的專業傳承顧問</p>
-                    <a href="https://line.me/ti/p/你的ID" class="block w-full bg-[#00a950] text-white text-center py-5 rounded-2xl font-black shadow-lg text-xl">
-                        💬 立即預約 1 對 1 諮詢
-                    </a>
-                    <p class="text-[10px] text-slate-400 mt-6 leading-relaxed px-4">
-                        ⚠️ 註：本試算依民法與113年憲判字第3號(兄弟姊妹特留分)精神編製。數據同步至俊德顧問系統，供進階規劃參考。
-                    </p>
+                    <a href="https://line.me/ti/p/你的ID" class="block w-full bg-[#00a950] text-white py-5 rounded-2xl font-black text-xl shadow-lg">💬 預約俊德 1 對 1 諮詢</a>
                 </div>
             </div>
         </div>
@@ -128,115 +95,61 @@
                 await liff.init({ liffId: "2008902145-dYIF2R2M" });
                 if (liff.isLoggedIn()) { const p = await liff.getProfile(); userName = p.displayName; }
                 else { liff.login(); }
-            } catch (e) { console.log(e); }
+            } catch (e) { console.log("LIFF登入失敗", e); }
         }
         init();
 
         function sync(data) {
-            const fid = "1lpAzMM1FJQaC8Nqfj6776KQZ-cihe0qVsXo1m4U--XU";
+            const fid = "1FAIpQLSdLrN8gX_Sfx33DkfU_kDgTTc71RKjcplz23720-ZkBcTuHTg"; // 這是您的新表單 ID
             const url = `https://docs.google.com/forms/d/e/${fid}/formResponse?` +
                 `entry.31174987=${encodeURIComponent(userName)}&` +
                 `entry.1130638521=${data.total}&` +
                 `entry.2001556012=${encodeURIComponent(data.struct)}&` +
                 `entry.1017830689=${encodeURIComponent(data.plan)}&` +
                 `submit=Submit`;
-            fetch(url, { mode: 'no-cors' });
+            
+            // 使用更可靠的傳送方式
+            const img = new Image();
+            img.src = url;
+            console.log("數據同步中...");
         }
 
         function calc() {
             const re = parseFloat(document.getElementById('re').value) || 0;
             const cash = parseFloat(document.getElementById('cash').value) || 0;
             const stock = parseFloat(document.getElementById('stock').value) || 0;
-            const totalBefore = re + cash + stock;
-            if (totalBefore <= 0) return alert("請輸入金額");
+            const total = re + cash + stock;
+            if (total <= 0) return alert("請輸入資產");
 
             const hasSpouse = document.getElementById('spouse').checked;
             const nC = parseInt(document.getElementById('child').value) || 0;
             const nP = parseInt(document.getElementById('parent').value) || 0;
             const nS = parseInt(document.getElementById('sibling').value) || 0;
 
-            // 法律順位邏輯
-            let rank = 0; let count = 0; let rankTitle = "";
-            if (nC > 0) { rank = 1; count = nC; rankTitle = "第一順位(子女)"; }
-            else if (nP > 0) { rank = 2; count = nP; rankTitle = "第二順位(父母)"; }
-            else if (nS > 0) { rank = 3; count = nS; rankTitle = "第三順位(兄弟姊妹)"; }
-            else { return alert("請填寫繼承成員結構"); }
+            let rankTitle = nC > 0 ? "子女" : (nP > 0 ? "父母" : (nS > 0 ? "兄弟姊妹" : "繼承人"));
+            let planName = (re / total > 0.7) ? '房產保全' : '傳承優化';
 
-            // 規劃策略
-            const ratio = (re / totalBefore);
-            const isRE = (ratio > 0.7);
-            let shift = isRE ? (re * 0.3) : (cash + stock);
-            const totalAfter = totalBefore - shift;
-
-            sync({ total: totalBefore, struct: `配偶:${hasSpouse?'有':'無'},子:${nC},父:${nP},兄:${nS}`, plan: isRE ? '房產活化' : '傳承優化' });
-
-            // 特留分計算
-            let sShare = 0, hShare = 0, hRate = (rank <= 2) ? 0.5 : 0.3333;
-            if (hasSpouse) {
-                if (rank === 1) { sShare = 1/(count+1); hShare = 1/(count+1); }
-                else if (rank === 2 || rank === 3) { sShare = 0.5; hShare = 0.5/count; }
-            } else { hShare = 1/count; }
+            // 同步至試算表
+            sync({ total: total, struct: `配偶:${hasSpouse?'有':'無'},子:${nC},父:${nP},兄:${nS}`, plan: planName });
 
             document.getElementById('result').classList.remove('hidden');
-            
-            // 憲法法庭特別說明
-            let siblingAlert = (rank === 3) ? `
-                <div class="mt-4 p-4 bg-amber-50 border-2 border-amber-200 rounded-2xl">
-                    <p class="text-amber-800 font-black text-sm">💡 俊德專業提醒：</p>
-                    <p class="text-amber-700 font-bold text-xs leading-relaxed">
-                        最新憲法判決指出兄弟姊妹特留分「不合理」。但在法律完成修改前，仍需透過保險規劃來徹底排除糾紛風險。
-                    </p>
-                </div>
-            ` : "";
-
             document.getElementById('resultContent').innerHTML = `
-                <div class="space-y-4">
-                    <div class="flex justify-between items-end border-b-2 border-slate-100 pb-4">
-                        <p class="text-slate-400 font-black text-sm">原始資產總額</p>
-                        <p class="text-3xl font-black text-slate-700">${Math.round(totalBefore).toLocaleString()} <span class="text-sm">萬</span></p>
-                    </div>
-                    <div class="flex justify-between items-end">
-                        <p class="text-blue-500 font-black text-sm">優化後計算基準</p>
-                        <p class="text-3xl font-black text-blue-600">${Math.round(totalAfter).toLocaleString()} <span class="text-sm text-blue-400">萬</span></p>
-                    </div>
+                <div class="text-center border-b pb-6">
+                    <p class="text-slate-400 font-bold text-sm">資產估算總額</p>
+                    <p class="text-4xl font-black text-slate-800">${Math.round(total).toLocaleString()} <span class="text-lg">萬</span></p>
                 </div>
-
-                <div class="p-6 bg-blue-50 rounded-3xl border-2 border-blue-100 shadow-inner">
+                <div class="p-6 bg-blue-50 rounded-3xl border-2 border-blue-100">
                     <p class="font-black text-[#004a99] text-xl mb-3 italic">🎯 俊德專業規劃建議</p>
                     <p class="report-main-text">
-                        建議將 <span class="report-highlight">${Math.round(shift).toLocaleString()} 萬</span> 移轉至保險預留金。此舉可有效縮減遺產總額，降低 <b>${rankTitle}</b> 未來依法可主張的特留分門檻。
-                    </p>
-                    ${siblingAlert}
-                </div>
-
-                <div class="risk-box shadow-sm">
-                    <p class="risk-title">⚠️ 核心資產風險警示</p>
-                    <p class="risk-desc">
-                        您的主要繼承人包含 <span class="underline">${rankTitle}</span>。若現金儲備不足以支應其特留分，房產恐被迫轉為「公同共有」，導致產權糾紛，家族祖產將無法買賣處分！
+                        透過保險金規劃，可有效降低未來應支付給 <span class="report-highlight">${rankTitle}</span> 的特留分總額，確保資產傳承主動權。
                     </p>
                 </div>
-
-                <div class="space-y-4">
-                    <h4 class="text-xs font-black text-slate-400 tracking-widest uppercase ml-1">規劃後單人特留分估算</h4>
-                    ${renderRow("配偶", sShare, 0.5, totalAfter, hasSpouse)}
-                    ${renderRow(rankTitle, hShare, hRate, totalAfter, true)}
+                <div class="p-6 bg-red-50 rounded-3xl border-l-8 border-red-500 shadow-sm">
+                    <p class="font-black text-red-700 text-xl mb-2">⚠️ 核心風險警示</p>
+                    <p class="text-red-600 font-bold text-lg leading-relaxed">若現金儲備不足以支付特留分，房產將面臨產權鎖死風險，無法隨意處分！</p>
                 </div>
             `;
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function renderRow(l, s, r, a, show) {
-            if (!show) return '';
-            const val = a * s * r;
-            return `
-                <div class="flex justify-between items-center bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                    <span class="text-lg font-bold text-slate-600">${l}</span>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-[#004a99]">${val.toFixed(1)}萬</span>
-                        <span class="block text-[10px] font-black text-white bg-[#00a950] px-2 rounded-full mt-1">優化後金額</span>
-                    </div>
-                </div>
-            `;
         }
     </script>
 </body>
