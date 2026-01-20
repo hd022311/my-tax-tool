@@ -23,7 +23,7 @@
 
     <div class="header-box">
         <h1 class="text-3xl font-black tracking-widest mb-1">富邦人壽 | 俊德</h1>
-        <p class="text-sm font-bold opacity-90 tracking-widest">資產保全與特留分分析系統</p>
+        <p class="text-sm font-bold opacity-90 tracking-widest text-white/80">資產保全與特留分智慧分析系統</p>
     </div>
 
     <div class="main-container">
@@ -116,13 +116,13 @@
                         </div>
 
                         <div class="pt-6">
-                            <a href="https://line.me/R/oaMessage/@hd022311/?你好俊德，我已完成特留分試算，想進一步針對降低負擔的規劃進行諮詢。" 
+                            <a href="https://hd022311.github.io/risk-assessment/" 
                                class="block w-full bg-[#004a99] text-white py-5 rounded-2xl font-black shadow-lg text-xl mb-4 text-center">
-                               💬 與俊德聯繫
+                               📋 60秒，評估家族傳承風險
                             </a>
                             <div class="p-4 bg-slate-50 rounded-xl text-left border border-slate-100 space-y-2">
-                                <p class="text-[10px] text-slate-400 font-bold leading-relaxed">💡 113憲判字第3號提醒：兄弟姊妹特留分規定有違憲之虞，修法期間建議透過保險指定受益人確保傳承。</p>
-                                <p class="text-[10px] text-slate-400 leading-relaxed italic border-t pt-2">免責聲明：本試算結果僅供參考，數據已同步至俊德顧問系統。</p>
+                                <p class="text-[10px] text-slate-400 font-bold leading-relaxed">💡 113憲判字第3號精神：兄弟姊妹特留分規定有違憲之虞，修法期間建議透過保險指定受益人確保傳承意願。</p>
+                                <p class="text-[10px] text-slate-400 leading-relaxed italic border-t pt-2">免責聲明：本試算結果僅供參考，數據已同步至俊德資產保全系統。</p>
                             </div>
                         </div>
                     </div>
@@ -144,6 +144,7 @@
         }
         init();
 
+        // 統一回傳邏輯
         function syncToGoogle(total, struct, plan) {
             const fid = "1FAIpQLSdLrN8gX_Sfx33DkfU_kDgTTc71RKjcplz23720-ZkBcTuHTg";
             const url = `https://docs.google.com/forms/d/e/${fid}/formResponse?` +
@@ -171,7 +172,7 @@
             if (nC > 0) { rank = 1; count = nC; rankTitle = "子女"; }
             else if (nP > 0) { rank = 2; count = nP; rankTitle = "父母"; }
             else if (nS > 0) { rank = 3; count = nS; rankTitle = "兄弟姊妹"; }
-            else { return alert("請填寫繼承成員"); }
+            else { return alert("請填寫繼承成員結構"); }
 
             let sShare = 0, hShare = 0, hRate = (rank <= 2) ? 0.5 : 0.3333;
             if (hasSpouse) {
@@ -191,11 +192,10 @@
                 ${renderLegalRow(rankTitle, total * hShare, total * hShare * hRate)}
             `;
             
-            // 重置：隱藏第二階段解方
             document.getElementById('insurancePlan').classList.add('hidden');
             document.getElementById('planSection').classList.remove('hidden');
 
-            // 同步數據
+            // 數據一次同步，不亂跳
             syncToGoogle(total, `配偶:${hasSpouse?'有':'無'},子:${nC},父:${nP},兄:${nS}`, `總資產${Math.round(total)}萬/預計優化${discount}%`);
 
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
@@ -205,7 +205,7 @@
             return `<div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex justify-between items-center">
                 <span class="font-bold text-slate-600">${l}</span>
                 <div class="text-right">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase">應繼分: ${Math.round(ej)}萬</p>
+                    <p class="text-[10px] text-slate-400 font-bold">應繼分: ${Math.round(ej)}萬</p>
                     <p class="text-xl font-black text-slate-700">特留分: ${Math.round(tj)}萬</p>
                 </div>
             </div>`;
@@ -219,7 +219,7 @@
             document.getElementById('planSection').classList.add('hidden');
             document.getElementById('discountTag').innerText = `規劃後預計負擔降低約 ${discount}%`;
             document.getElementById('planText').innerHTML = `
-                建議將 <span class="report-highlight">${Math.round(shift).toLocaleString()} 萬</span> 移轉至保險規劃。基準資產將降至 ${Math.round(totalAfter).toLocaleString()} 萬，有效守護房產產權不被鎖死。
+                建議透過保險規劃預留 <span class="report-highlight">${Math.round(shift).toLocaleString()} 萬</span> 稅源。計算特留分的遺產基準將降至 ${Math.round(totalAfter).toLocaleString()} 萬，有效守護房產產權完整。
             `;
 
             document.getElementById('compareDetail').innerHTML = `
@@ -227,7 +227,6 @@
                 ${renderCompareRow(rankTitle, hShare, hRate, total, totalAfter)}
             `;
             
-            // 自動滾動到方案處
             setTimeout(() => {
                 document.getElementById('insurancePlan').scrollIntoView({ behavior: 'smooth' });
             }, 100);
@@ -236,10 +235,10 @@
         function renderCompareRow(l, s, r, before, after) {
             const b = Math.round(before * s * r);
             const a = Math.round(after * s * r);
-            return `<div class="bg-blue-50/50 p-5 rounded-2xl border border-blue-100 flex justify-between items-center">
+            return `<div class="bg-blue-50/50 p-5 rounded-2xl border border-blue-100 flex justify-between items-center shadow-inner">
                 <span class="font-bold text-slate-600 text-lg">${l}</span>
                 <div class="flex gap-4">
-                    <div class="text-center px-3 border-r border-blue-100"><p class="text-[10px] text-slate-400 font-bold">優化前</p><p class="text-sm line-through text-slate-400 font-bold">${b}萬</p></div>
+                    <div class="text-center px-3 border-r border-blue-100 font-bold"><p class="text-[10px] text-slate-400">優化前</p><p class="text-sm line-through text-slate-400">${b}萬</p></div>
                     <div class="text-center"><p class="text-[10px] text-blue-500 font-bold">優化後</p><p class="text-2xl font-black text-[#004a99]">${a}萬</p></div>
                 </div>
             </div>`;
